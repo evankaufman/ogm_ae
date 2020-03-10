@@ -1,0 +1,7 @@
+num_robots: 1
+robot_0:
+  ns: quadrotor1
+  num_sensors: 2
+  sensor_0: Xtion
+  sensor_1: Hokuyo
+  sensor_explore: Xtion

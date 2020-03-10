@@ -1,0 +1,47 @@
+exploration:
+  max_speed:            0.25
+  height:               1.0
+  alpha_xy_factor:      3
+  alpha_z_factor:       3
+  free_nbrs_coll_map:   3
+  min_info_gain_thresh: 0.02
+  poly_order:           2
+  points_per_segment:   8
+  traj_time_step:       0.01
+  timers_on:            true
+  yaw_rotation_time:    15.0
+  gazebo_load_time:     3.0
+  gazebo_topic:         /gazebo/set_model_state
+  min_max_thresh:       0.11
+  prob_H_map_thresh:    0.01
+  num_rays_per_cand:    16
+  acceptable_coll_prob: 0.05
+  candidate_separation: 0.5
+  FOV_angle:            1.6
+  bump_dist:            3.0
+  bump_val_at_dist:     0.5
+  discount_radius:      3.0
+  max_computation_time: 1.0
+  max_angular_vel:      0.6
+  halt:                 false
+  # Topics get Namespaced in Code (viz topics too)
+  camera_path_topic:    CPLS_camera
+  position_path_topic:  CPLS_position
+  velocity_path_topic:  CPLS_velocity
+  accelera_path_topic:  CPLS_acceleration
+  traj_info_topic:      explore_traj_info
+  des_pose_topic:       desired_pose
+  des_cam_topic:        desired_cam_pose
+  des_twist_topic:      desired_twist
+  des_accel_topic:      desired_accel
+  visualization:
+    pub_paths:              true
+    viz_cost_map:           true
+    cost_map_topic:         cost_map
+    viz_cand_entropies:     true
+    entropy_marker_topic:   info_gains_candidates
+    viz_cand_entr_dists:    true
+    dist_info_marker_topic: info_gains_distances_candidates
+    arrow_scale:            0.2
+    djk_topic:              DJK
+    non_optimal_opacity:    0.6

@@ -1,0 +1,9 @@
+Header header
+int64 numSegments
+int64 numCoeff
+float64[] timeStartSeg
+float64[] xCoeff
+float64[] yCoeff
+float64 fixedZVal
+float64 thetaStart
+float64 thetaEnd

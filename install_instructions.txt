@@ -1,0 +1,99 @@
+The following packages run on ROS Kinetic (Ubuntu 16.04) using Gazebo 8. The full instructions (command line) are below:
+
+
+Install ROS Kinetic:
+sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
+sudo apt-get update
+sudo apt-get install ros-kinetic-desktop-full
+IMPORTANT NOTE: the above command may not work if qt5 is installed on your system.
+sudo rosdep init (you might have to delete a file if you installed ROS before, e.g., sudo rm /etc/ros/rosdep/sources.list.d/20-default.list)
+rosdep update
+echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+sudo apt-get install python-rosinstall python-rosinstall-generator python-wstool build-essential
+
+
+Several other packages are required (some may already be installed):
+sudo apt-get install ros-kinetic-tf2*
+sudo apt-get install ros-kinetic-voxel-grid
+sudo apt-get install ros-kinetic-hector-*
+
+Without desktop-full ROS install, you might also need:
+sudo apt-get install libgtest-dev
+sudo apt-get install ros-kinetic-robot-state-publisher
+sudo apt-get install ros-kinetic-pcl-*
+
+Note: in some cases, the ROS package may not be updated yet for the distribution (e.g. Hector with ROS Lunar on 7/17/17).
+
+
+Gazebo: IMPORTANT NOTE! ROS Kinetic uses Gazebo 7. On some machines, the fsaa argument (https://bitbucket.org/osrf/gazebo/issues/1837/vmware-rendering-z-ordering-appears-random#comment-29498034) causes camera depth readings to crash Gazebo. One solution is removing Gazebo 7, downloading Gazebo 8 (http://gazebosim.org/tutorials?tut=install_ubuntu), then reinstalling the ros packages gazebo_ros and gazebo_plugins. Instructions to do this are below:
+sudo apt-get purge gazebo7
+sudo sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list'
+cat /etc/apt/sources.list.d/gazebo-stable.list
+  -> CHECK: this gives deb http://packages.osrfoundation.org/gazebo/ubuntu-stable trusty main
+wget http://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -
+sudo apt-get update
+sudo apt-get install gazebo8
+sudo apt-get install libgazebo8-dev
+sudo apt-get install ros-kinetic-gazebo8*
+
+You may want to install gazebo_ros_pkgs from the source (e.g. Kinect/Xtion measurements are cut off/not considered). Here is a way
+
+Clone the following in your catkin_ws/src
+git clone https://github.com/ros-simulation/gazebo_ros_pkgs.git
+
+Make any changes to the source files. For the Kinect/Xtion depth reading issue, modify the line in gazebo_ros_pkgs/gazebo_plugins/src/gazebo_ros_openni_kinect.cpp that reads
+
+    this->point_cloud_cutoff_max_ = 5.0;
+
+to some maximum value larger than 5 (e.g. 100.0). Also, if you want maximum readings when nothing is measured (i.e. no objects less than 'point_cloud_cutoff_max_' away), replace the line
+
+        *iter_x = *iter_y = *iter_z = std::numeric_limits<float>::quiet_NaN ();
+
+with the lines
+
+        *iter_x = point_cloud_cutoff_max_ * tan(yAngle);
+        *iter_y = point_cloud_cutoff_max_ * tan(pAngle);
+        *iter_z = point_cloud_cutoff_max_;
+
+Then, try 
+catkin_make
+in your catkin_ws.
+Note: you may have to get rid of gazebo_ros_pkgs if installed (sudo apt-get remove ros-kinetic-gazebo-ros-pkgs) and/or you might also need gazebo_ros_control (sudo apt-get install ros-kinetic-gazebo-ros-control).
+
+
+Connecting Master & Slave
+Disable any firewalls (e.g. sudo service ufw stop)
+On Master, add a .sh file with 
+export ROS_IP=master_ip
+where master_ip is the master's IP and source it.
+On Slave, add a .sh file with
+export ROS_IP=slave_ip
+export ROS_MASTER_URI=http://master_ip:11311
+where slave_ip is the slave's IP and source it.
+
+
+Hokuyo connection (urg_node):
+Apply the follow network settings (manual IPv4):
+IP:      192.168.0.15
+Netmask: 24
+Gateway: 192.168.0.1
+After the network configuration, the service might need to restart:
+service networking restart
+Once installed (apt-get/Github), run (for the Ethernet version)
+rosrun urg_node urg_node _ip_address:="192.168.0.10"
+and look for the "/scan" message.
+
+
+Jetson TX2 Cloning without ConnectTech Board: simply follow http://elinux.org/Jetson/TX2_Cloning.
+
+Jetson TX2 Cloning with ConnectTech Board: for either copying the image or flashing the copied image, make sure the board is in recovery mode (turn on with power (and "soc" on development board), hold down "rec" 4 seconds, striking and releasing "rst" in the middle of holding. Navigate to the 64_TX2/Linux_for_Tegra_tx2 directory, then...
+Copy (clone) the master image (command from http://elinux.org/Jetson/TX2_Cloning):
+sudo ./flash.sh -r -k APP -G system.img jetson-tx2 mmcblk0p1
+Important note: this MUST be done on the ConnectTech breakout board if the drivers for that board were installed on the master.
+The above will create system.img & system.img.raw. You will need to replace the existing system.img inside the bootloader folder with this new one.
+Flash new cloned Jetson (commands combined from above link and ConnectTech driver ReadMe assuming you're using the orbitty board):
+sudo ./flash.sh -r orbitty mmcblk0p1
+Note: this is successfully tested on the development breakout board and not on the ConnectTech board. Then the Jetson works on both.
+

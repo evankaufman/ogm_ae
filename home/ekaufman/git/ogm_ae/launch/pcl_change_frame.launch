@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<launch>
+
+<arg name="pcl_name_in"  default=""      />
+<arg name="pcl_name_out" default=""      />
+<arg name="frame_out"    default="/world"/>
+
+<!-- Converting "pcl_name_in" to "pcl_name_out" in Frame "frame_out"-->
+<node pkg="ogm_ae" name="$(anon sensor_conversion_node)" type="sensor_conversion_node" output="screen">
+
+  <!-- Topics -->
+  <param name="topic_in"  value="$(arg pcl_name_in)" />
+  <param name="topic_out" value="$(arg pcl_name_out)"/>
+
+  <!-- Desired Frame -->
+  <param name="frame_out" value="$(arg frame_out)"   />
+
+</node>
+
+</launch>

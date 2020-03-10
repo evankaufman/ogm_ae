@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<launch>
+
+<arg name="pcl_name" default="/camera/depth_registered/points"/>
+
+<!-- Converting Xtion PCL -->
+<node pkg="ogm_ae" name="pcl_limited_node_0" type="pcl_limit_range" output="screen">
+
+  <!-- Topics -->
+  <param name="topic_in"  value="$(arg pcl_name)"     />
+  <param name="topic_out" value="/xtion_limited_range"/>
+
+  <!-- Sensor Information -->
+  <param name="sensor_number" value="0"/>
+  <param name="has_colors" value="true"/>
+
+</node>
+
+<!-- Converting Hokuyo PCL -->
+<node pkg="ogm_ae" name="pcl_limited_node_1" type="pcl_limit_range" output="screen">
+
+  <!-- Topics -->
+  <param name="topic_in"  value="/depth_lsr"          />
+  <param name="topic_out" value="/hokuyo_limited_range"/>
+
+  <!-- Sensor Information -->
+  <param name="sensor_number" value="1"/>
+  <param name="has_colors" value="false"/>
+
+</node>
+
+</launch>

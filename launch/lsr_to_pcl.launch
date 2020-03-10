@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<launch>
+
+<arg name="lsr_name_in"  default="quadrotor0/scan"/>
+<arg name="lsr_name_out" default="quadrotor0/cloud"/>
+<arg name="frame_out"    default="/world"/>
+
+<!-- Converting Laser to PCL -->
+<node pkg="ogm_ae" name="$(anon laser2pcl)" type="laser2pcl" output="screen">
+
+  <!-- Topics -->
+  <param name="topic_in"  value="$(arg lsr_name_in)"  />
+  <param name="topic_out" value="$(arg lsr_name_out)" />
+
+</node>
+
+
+</launch>

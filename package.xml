@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<package>
+  <name>ogm_ae</name>
+  <version>0.1.0</version>
+  <description>Occupancy Grid Mapping and Autonomous Exploration (ogm_ae)</description>
+
+  <maintainer email="evantkaufman@gmail.com">Evan Kaufman</maintainer>
+  <license>BSD</license>
+  <url type="website">http://fdcl.seas.gwu.edu/students.html</url>
+  <author email="evankaufman@gwu.edu">Evan Kaufman</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>trajectory_msgs</build_depend>
+  <build_depend>message_generation</build_depend>
+  <build_depend>OpenGL</build_depend>
+  <build_depend>GLUT</build_depend>
+  <build_depend>gazebo_plugins</build_depend>
+  <build_depend>gazebo_msgs</build_depend>
+  <build_depend>pcl_ros</build_depend>
+  <build_depend>pcl_conversions</build_depend>
+  <build_depend>tf2_msgs</build_depend>
+  <build_depend>libpcl-all-dev</build_depend>
+  <build_depend>voxel</build_depend>
+
+  <!-- <build_depend>cmake_modules</build_depend> -->
+
+  <run_depend>message_runtime</run_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>rospy</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>trajectory_msgs</run_depend>
+  <run_depend>gazebo_plugins</run_depend>
+  <run_depend>gazebo_msgs</run_depend>
+  <run_depend>pcl_ros</run_depend>
+  <run_depend>pcl_conversions</run_depend>
+  <run_depend>tf2_msgs</run_depend>
+  <run_depend>libpcl-all</run_depend>
+  <run_depend>voxel</run_depend>
+
+  <!-- <run_depend>cmake_modules</run_depend> -->
+
+
+
+  <export><gazebo_ros plugin_path="${prefix}/lib" gazebo_media_path="${prefix}" /></export>
+
+</package>

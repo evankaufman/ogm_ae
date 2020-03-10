@@ -1,0 +1,54 @@
+mapping:
+  num_sensors: 2
+  sensor_0:
+    naming:
+      name:  Xtion
+      topic: /voxel_grid/output
+      frame: camera_rgb_optical_frame
+    properties:
+      min_range:     0.5
+      max_range:     4.0
+      sigma:         0.25
+      prob_hit:      0.9
+      prob_rand:     0.1
+      prob_max_free: 0.01
+      prob_max_occ:  0.99
+      prob_det_sat:  0.0
+      consider_max:  true
+      has_colors:    true
+    print_timers:    true
+  sensor_1:
+    naming:
+      name:  Hokuyo
+      topic: /depth_lsr
+      frame: laser
+    properties:
+      min_range:     0.5
+      max_range:     4.0
+      sigma:         0.1
+      prob_hit:      0.9
+      prob_rand:     0.1
+      prob_max_free: 0.01
+      prob_max_occ:  0.99
+      prob_det_sat:  0.0
+      consider_max:  true
+      has_colors:    false    
+    print_timers:    true
+exploration:
+  num_sensors: 1
+  sensor_0:
+    naming:
+      name:  FicticiousXtion
+      frame: quadrotor1/camera_link
+    properties:
+      min_range:     0.7
+      max_range:     4.0
+      sigma:         0.05
+      prob_hit:      0.9
+      prob_rand:     0.1
+      prob_max_free: 0.01
+      prob_max_occ:  0.99
+      prob_det_sat:  0.0
+      consider_max:  false
+      has_colors:    false
+

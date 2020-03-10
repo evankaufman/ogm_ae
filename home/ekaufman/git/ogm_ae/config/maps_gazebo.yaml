@@ -1,0 +1,48 @@
+mapping:
+  occ_topic:  map_probabilities
+  rgb_topic:  map_rgb
+  diff_topic: map_changes
+  H_topic:    map_entropy
+  frame:      world
+  track_diff: true
+  dimension:  3
+  alpha:      0.075
+  P_init:     0.1
+  occ_min:    0.0001
+  occ_max:    0.9999
+  occ_thresh: 0.6
+collision:
+  occ_topic:  map_2D_coll
+  viz_topic:  ogm_2D_coll
+  frame:      world
+  dimension:  2
+  P_init:     0.1
+  occ_min:    0.0001
+  occ_max:    0.9999
+  occ_thresh: 0.6
+entropy:
+  occ_topic:  map_2D_entropy
+  viz_topic:  ogm_2D_entropy
+  frame:      world
+  dimension:  2
+  alpha:      0.075
+  P_init:     0.1
+  occ_min:    0.0001
+  occ_max:    0.9999
+  occ_thresh: 0.6
+  x_map_min:  -4.0
+  x_map_max:  4.0
+  y_map_min:  -6.0
+  y_map_max:  6.0
+collision_and_entropy:
+  occ_topic:  map_2D_coll_entropy
+  viz_topic:  ogm_2D_coll_entropy
+  frame:      world
+  dimension:  2
+  P_init:     0.1
+  occ_min:    0.0001
+  occ_max:    0.9999
+visualization:
+  ogm_3D_topic: ogm_3D
+  rviz_full_3D: false
+
